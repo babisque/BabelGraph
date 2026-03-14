@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "BabelGraph.Application/1.0.0": {
+        "dependencies": {
+          "BabelGraph.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BabelGraph.Application.dll": {}
+        }
+      },
+      "BabelGraph.Domain/1.0.0": {
+        "runtime": {
+          "BabelGraph.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BabelGraph.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BabelGraph.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

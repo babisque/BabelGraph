@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BabelGraph.Application/BabelGraph.Application.csproj" />
+    <Project Path="src/BabelGraph.Desktop/BabelGraph.Desktop.csproj" />
+    <Project Path="src/BabelGraph.Domain/BabelGraph.Domain.csproj" />
+    <Project Path="src/BabelGraph.Infrastructure/BabelGraph.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BabelGraph.Application.Tests/BabelGraph.Application.Tests.csproj" />
+    <Project Path="tests/BabelGraph.Domain.Tests/BabelGraph.Domain.Tests.csproj" />
+    <Project Path="tests/BabelGraph.Infrastructure.Tests/BabelGraph.Infrastructure.Tests.csproj" />
+    <Project Path="tests/BabelGraph.Shared.Tests/BabelGraph.Shared.Tests.csproj" />
+  </Folder>
+</Solution>

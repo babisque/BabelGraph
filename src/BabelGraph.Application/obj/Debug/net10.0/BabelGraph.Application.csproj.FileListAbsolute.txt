@@ -1,0 +1,16 @@
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\bin\Debug\net10.0\BabelGraph.Application.deps.json
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\bin\Debug\net10.0\BabelGraph.Application.dll
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\bin\Debug\net10.0\BabelGraph.Application.pdb
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\bin\Debug\net10.0\BabelGraph.Domain.dll
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\bin\Debug\net10.0\BabelGraph.Domain.pdb
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.csproj.AssemblyReference.cache
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.AssemblyInfoInputs.cache
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.AssemblyInfo.cs
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.csproj.CoreCompileInputs.cache
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.sourcelink.json
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGra.00C9221F.Up2Date
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.dll
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\refint\BabelGraph.Application.dll
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\BabelGraph.Application.pdb
+C:\Users\rodrigo\Documents\Projetos\BabelGraph\src\BabelGraph.Application\obj\Debug\net10.0\ref\BabelGraph.Application.dll
