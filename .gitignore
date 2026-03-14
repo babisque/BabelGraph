@@ -1,0 +1,76 @@
+## [Visual Studio]
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (DotSettings)
+*.csproj.DotSettings.user
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+Log/
+logs/
+
+# Visual Studio 2015/2017/2019 cache/options directory
+.vs/
+# Uncomment if you use Visual Studio Code
+.vscode/
+
+## [Roslyn]
+*.pfx
+*.publishsettings
+
+## [.NET]
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Core User Secrets
+aspnetcore-user-secrets.json
+
+# Tooling
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# NUnit
+TestResult.xml
+nunit-*.xml
+
+# Entity Framework Core
+*.design.cs
+
+# NuGet Packages
+*.nupkg
+# NuGet Symbol Packages
+*.snupkg
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rider
+.idea/
+*.sln.iml
+
+# Avalonia
+.avalonia/
