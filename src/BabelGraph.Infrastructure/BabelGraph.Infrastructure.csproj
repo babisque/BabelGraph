@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BabelGraph.Domain\BabelGraph.Domain.csproj" />
-    <ProjectReference Include="..\BabelGraph.Application\BabelGraph.Application.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

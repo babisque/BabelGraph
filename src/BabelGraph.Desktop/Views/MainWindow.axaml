@@ -7,14 +7,42 @@
         x:Class="BabelGraph.Desktop.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="BabelGraph.Desktop">
+        Title="BabelGraph">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+    <Grid ColumnDefinitions="*, 2*">
+        <!-- Text Editor Side -->
+        <Grid Grid.Column="0" RowDefinitions="*, Auto">
+            <TextBox Grid.Row="0" 
+                     Text="{Binding CodeInput}" 
+                     AcceptsReturn="True" 
+                     Watermark="Enter Mermaid syntax here..."/>
+            
+            <Border Grid.Row="1" 
+                    Background="Red" 
+                    IsVisible="{Binding Canvas.ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                <TextBlock Text="{Binding Canvas.ErrorMessage}" 
+                           Foreground="White" 
+                           Margin="5" 
+                           TextWrapping="Wrap"/>
+            </Border>
+        </Grid>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+        <!-- Canvas Side -->
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding Canvas.Nodes}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Background="WhiteSmoke"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1" Background="White" Padding="5"
+                            Canvas.Left="{Binding X}"
+                            Canvas.Top="{Binding Y}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
 </Window>
