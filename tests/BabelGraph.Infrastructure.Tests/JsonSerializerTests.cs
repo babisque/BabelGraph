@@ -17,7 +17,7 @@ public class JsonSerializerTests
         var nodes = new List<DiagramNode> { node };
 
         // Act
-        var json = DiagramJsonSerializer.Serialize(nodes);
+        var json = serializer.Serialize(nodes);
 
         // Assert
         using var document = JsonDocument.Parse(json);

@@ -3,7 +3,11 @@ using BabelGraph.Infrastructure.Interfaces;
 
 namespace BabelGraph.Application.Services;
 
-public class SynchronizationService(IParserService parserService, IDiagramState diagramState)
+public class SynchronizationService(
+    IParserService parserService, 
+    IDiagramState diagramState,
+    IDiagramSerializer serializer,
+    IEditorService editorService) : ISynchronizationService
 {
     private CancellationTokenSource? _debounceCts;
     private readonly Lock _lock = new();
@@ -43,5 +47,14 @@ public class SynchronizationService(IParserService parserService, IDiagramState 
         {
             diagramState.SetErrorState("An unexpected error occurred during parsing.");
         }
+    }
+
+    public Task UpdateNodePositionAsync(string nodeName, double x, double y)
+    {
+        diagramState.UpdateNodePosition(nodeName, x, y);
+        var regeneratedText = serializer.Serialize(diagramState.Nodes);
+        editorService.UpdateText(regeneratedText);
+
+        return Task.CompletedTask;
     }
 }

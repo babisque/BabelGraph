@@ -1,9 +1,11 @@
+using BabelGraph.Domain.Interfaces;
 using BabelGraph.Application.Services;
 using BabelGraph.Desktop.Models;
+using BabelGraph.Desktop.Services;
 using BabelGraph.Desktop.ViewModels;
-using BabelGraph.Domain.Interfaces;
 using BabelGraph.Infrastructure.Interfaces;
 using BabelGraph.Infrastructure.Parsers;
+using BabelGraph.Infrastructure.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -19,13 +21,15 @@ public class CompositionRoot
 
         // Infrastructure
         services.AddSingleton<IParserService, MermaidParser>();
+        services.AddSingleton<IDiagramSerializer, DiagramJsonSerializer>();
 
         // Domain State (shared between layers)
         services.AddSingleton<DiagramState>();
         services.AddSingleton<IDiagramState>(sp => sp.GetRequiredService<DiagramState>());
 
-        // Application Services
-        services.AddSingleton<SynchronizationService>();
+        // Services
+        services.AddSingleton<IEditorService, DesktopEditorService>();
+        services.AddSingleton<ISynchronizationService, SynchronizationService>();
 
         // ViewModels
         services.AddTransient<CanvasViewModel>();

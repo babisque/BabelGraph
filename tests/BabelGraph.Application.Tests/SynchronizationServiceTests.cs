@@ -3,7 +3,6 @@ using BabelGraph.Domain.Entities;
 using BabelGraph.Domain.Interfaces;
 using BabelGraph.Infrastructure.Interfaces;
 using Moq;
-using Xunit;
 
 namespace BabelGraph.Application.Tests;
 
@@ -11,21 +10,29 @@ public class SynchronizationServiceTests
 {
     private readonly Mock<IParserService> _parserMock;
     private readonly Mock<IDiagramState> _stateMock;
+    private readonly Mock<IDiagramSerializer> _serializerMock;
+    private readonly Mock<IEditorService> _editorMock;
     private readonly SynchronizationService _service;
 
     public SynchronizationServiceTests()
     {
         _parserMock = new Mock<IParserService>();
         _stateMock = new Mock<IDiagramState>();
-        _service = new SynchronizationService(_parserMock.Object, _stateMock.Object);
+        _serializerMock = new Mock<IDiagramSerializer>();
+        _editorMock = new Mock<IEditorService>();
+        _service = new SynchronizationService(
+            _parserMock.Object, 
+            _stateMock.Object, 
+            _serializerMock.Object,
+            _editorMock.Object);
     }
 
     [Fact]
     public async Task Should_Update_Domain_When_Syntax_Is_Valid()
     {
         // Arrange
-        var validText = "class User { name: string }";
-        var parsedNodes = new List<DiagramNode> { new DiagramNode("User") };
+        const string validText = "class User { name: string }";
+        var parsedNodes = new List<DiagramNode> { new("User") };
         
         _parserMock.Setup(p => p.Parse(validText)).Returns(parsedNodes);
 
@@ -41,8 +48,8 @@ public class SynchronizationServiceTests
     public async Task Should_Lock_State_And_Return_Error_When_Syntax_Is_Invalid()
     {
         // Arrange
-        var invalidText = "class User {";
-        var errorMessage = "Syntax error: missing closing brace";
+        const string invalidText = "class User {";
+        const string errorMessage = "Syntax error: missing closing brace";
         
         _parserMock.Setup(p => p.Parse(invalidText))
                    .Throws(new SyntaxException(errorMessage));
@@ -51,22 +58,17 @@ public class SynchronizationServiceTests
         await _service.ProcessTextInputAsync(invalidText);
 
         // Assert
-        // State should NOT be updated with new nodes
         _stateMock.Verify(s => s.UpdateDiagram(It.IsAny<IEnumerable<DiagramNode>>()), Times.Never);
-        
-        // State should be notified of the error
         _stateMock.Verify(s => s.SetErrorState(errorMessage), Times.Once);
-        
-        // State should remain "Frozen" (implied by lack of update)
     }
 
     [Fact]
     public async Task Should_Only_Process_Input_After_Debounce_Delay()
     {
         // Arrange
-        var text1 = "cl";
-        var text2 = "class";
-        var text3 = "class User";
+        const string text1 = "cl";
+        const string text2 = "class";
+        const string text3 = "class User";
         
         // Act
         // Simulate rapid typing
@@ -74,12 +76,33 @@ public class SynchronizationServiceTests
         var task2 = _service.ProcessTextInputAsync(text2);
         var task3 = _service.ProcessTextInputAsync(text3);
 
-        // Wait longer than the 300ms debounce
         await Task.Delay(500);
 
         // Assert
-        // Parser should only be called for the final state
         _parserMock.Verify(p => p.Parse(It.IsAny<string>()), Times.Once);
         _parserMock.Verify(p => p.Parse(text3), Times.Once);
+    }
+
+    [Fact]
+    public async Task Should_Update_Domain_And_Regenerate_Text_When_Node_Moved()
+    {
+        // Arrange
+        const string nodeName = "User";
+        const double newX = 150.0;
+        const double newY = 200.0;
+        var nodes = new List<DiagramNode> { new(nodeName) };
+        const string regeneratedText = "class User { ... } // Updated position";
+
+        _stateMock.Setup(s => s.Nodes).Returns(nodes);
+        _serializerMock.Setup(s => s.Serialize(nodes)).Returns(regeneratedText);
+
+        // Act
+        await _service.UpdateNodePositionAsync(nodeName, newX, newY);
+
+        // Assert
+        _stateMock.Verify(s => s.UpdateNodePosition(nodeName, newX, newY), Times.Once);
+        
+        _serializerMock.Verify(s => s.Serialize(nodes), Times.Once);
+        _editorMock.Verify(e => e.UpdateText(regeneratedText), Times.Once);
     }
 }

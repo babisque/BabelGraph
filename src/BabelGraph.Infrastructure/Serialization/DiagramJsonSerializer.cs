@@ -1,11 +1,12 @@
 using System.Text.Json;
 using BabelGraph.Domain.Entities;
+using BabelGraph.Domain.Interfaces;
 
 namespace BabelGraph.Infrastructure.Serialization;
 
-public class DiagramJsonSerializer
+public class DiagramJsonSerializer : IDiagramSerializer
 {
-    public static string Serialize(IEnumerable<DiagramNode> nodes)
+    public string Serialize(IEnumerable<DiagramNode> nodes)
     {
         return JsonSerializer.Serialize(nodes, new JsonSerializerOptions { WriteIndented = true });
     }
