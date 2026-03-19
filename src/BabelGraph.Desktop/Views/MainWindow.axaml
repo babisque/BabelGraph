@@ -3,46 +3,84 @@
         xmlns:vm="using:BabelGraph.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
         x:Class="BabelGraph.Desktop.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="BabelGraph">
+        Title="BabelGraph - Hybrid Diagram Editor"
+        Background="#1E1E1E">
 
-    <Grid ColumnDefinitions="*, 2*">
-        <!-- Text Editor Side -->
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*, 4, 2*">
+        
         <Grid Grid.Column="0" RowDefinitions="*, Auto">
-            <TextBox Grid.Row="0" 
-                     Text="{Binding CodeInput}" 
-                     AcceptsReturn="True" 
-                     Watermark="Enter Mermaid syntax here..."/>
             
-            <Border Grid.Row="1" 
-                    Background="Red" 
-                    IsVisible="{Binding Canvas.ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                <TextBlock Text="{Binding Canvas.ErrorMessage}" 
-                           Foreground="White" 
-                           Margin="5" 
+            <TextBox Grid.Row="0"
+                     Text="{Binding CodeText}"
+                     AcceptsReturn="True"
+                     TextWrapping="NoWrap"
+                     FontFamily="Consolas, Monospace"
+                     FontSize="14"
+                     Background="#252526"
+                     Foreground="#D4D4D4"
+                     BorderThickness="0"
+                     Watermark="Digite o código do diagrama aqui..."/>
+
+            <Border Grid.Row="1"
+                    Background="#E51400"
+                    IsVisible="{Binding HasSyntaxError}"
+                    Padding="12">
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="White"
+                           FontWeight="SemiBold"
                            TextWrapping="Wrap"/>
             </Border>
         </Grid>
 
-        <!-- Canvas Side -->
-        <ItemsControl Grid.Column="1" ItemsSource="{Binding Canvas.Nodes}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas Background="WhiteSmoke"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1" Background="White" Padding="5"
-                            Canvas.Left="{Binding X}"
-                            Canvas.Top="{Binding Y}">
-                        <TextBlock Text="{Binding Name}"/>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <GridSplitter Grid.Column="1" Background="#333333" ResizeDirection="Columns"/>
+
+        <ScrollViewer Grid.Column="2" 
+                      HorizontalScrollBarVisibility="Auto" 
+                      VerticalScrollBarVisibility="Auto">
+            
+            <ItemsControl ItemsSource="{Binding Canvas.Nodes}">
+                
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Background="#1A1A1A" Width="3000" Height="3000"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#2D2D30"
+                                BorderBrush="#3E3E42"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Padding="15"
+                                MinWidth="120"
+                                BoxShadow="0 4 8 0 #000000">
+                            <Canvas.Left>
+                                <Binding Path="X"/>
+                            </Canvas.Left>
+                            <Canvas.Top>
+                                <Binding Path="Y"/>
+                            </Canvas.Top>
+                            
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" 
+                                           Foreground="#4EC9B0" 
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>
