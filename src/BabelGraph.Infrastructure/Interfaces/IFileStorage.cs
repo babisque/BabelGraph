@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace BabelGraph.Infrastructure.Interfaces;
 
 public interface IFileStorage

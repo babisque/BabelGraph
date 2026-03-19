@@ -1,25 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using BabelGraph.Domain.Entities;
 using BabelGraph.Domain.Interfaces;
 using BabelGraph.Infrastructure.Interfaces;
 
 namespace BabelGraph.Application.Services;
 
-public class SynchronizationService
+public class SynchronizationService(IParserService parserService, IDiagramState diagramState)
 {
-    private readonly IParserService _parserService;
-    private readonly IDiagramState _diagramState;
     private CancellationTokenSource? _debounceCts;
-    private readonly object _lock = new();
-
-    public SynchronizationService(IParserService parserService, IDiagramState diagramState)
-    {
-        _parserService = parserService;
-        _diagramState = diagramState;
-    }
+    private readonly Lock _lock = new();
 
     public async Task ProcessTextInputAsync(string text)
     {
@@ -44,17 +31,17 @@ public class SynchronizationService
 
         try
         {
-            var nodes = _parserService.Parse(text);
-            _diagramState.UpdateDiagram(nodes);
-            _diagramState.SetErrorState(null);
+            var nodes = parserService.Parse(text);
+            diagramState.UpdateDiagram(nodes);
+            diagramState.SetErrorState(null);
         }
         catch (SyntaxException ex)
         {
-            _diagramState.SetErrorState(ex.Message);
+            diagramState.SetErrorState(ex.Message);
         }
         catch (Exception)
         {
-            _diagramState.SetErrorState("An unexpected error occurred during parsing.");
+            diagramState.SetErrorState("An unexpected error occurred during parsing.");
         }
     }
 }

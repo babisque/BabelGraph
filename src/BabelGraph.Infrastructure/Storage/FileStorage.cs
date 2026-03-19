@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using BabelGraph.Infrastructure.Interfaces;
 
 namespace BabelGraph.Infrastructure.Storage;
@@ -13,10 +10,8 @@ public class FileStorage : IFileStorage
         
         try
         {
-            // Write to temporary file
             await File.WriteAllTextAsync(tempPath, content);
             
-            // Atomic swap
             if (File.Exists(filePath))
             {
                 File.Replace(tempPath, filePath, null);

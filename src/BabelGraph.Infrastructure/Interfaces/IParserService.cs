@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
 using BabelGraph.Domain.Entities;
 
 namespace BabelGraph.Infrastructure.Interfaces;
 
-public class SyntaxException : Exception
-{
-    public SyntaxException(string message) : base(message)
-    {
-    }
-}
+public class SyntaxException(string message) : Exception(message);
 
 public interface IParserService
 {
